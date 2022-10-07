@@ -1,0 +1,16 @@
+{
+    "normal" : {
+        "name" : "홍익대학교 일반공지",
+        "list" : []
+    },
+    "student" : {
+        "name" : "홍익대학교 학생공지",
+        "list" : [
+            "https://ptb.discord.com/api/webhooks/1015920865340309505/MdhWU_gxY34TLY1qSwtwsY_aPo_j4kKGLWKxrRR-6_UA-WQoqz-M5K4uAU7FlAy3brjT"
+        ]
+    },
+    "sejongCampus" : {
+        "name" : "홍익대학교 세종캠퍼스공지",
+        "list" : []
+    }
+}

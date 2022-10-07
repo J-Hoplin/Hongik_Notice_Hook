@@ -1,0 +1,15 @@
+{
+    "colors" : {
+        "normal" : "80F75F",
+        "warning" : "F99D18",
+        "error" : "EF492F"
+    },
+    "error" : {
+        "title" : "Something went wrong!",
+        "field-title" : "Error Message"
+    },
+    "footer" : {
+        "text" : "Developed by Hoplin",
+        "url" : "https://avatars.githubusercontent.com/u/45956041?v=4"
+    }
+}
