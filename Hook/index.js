@@ -4,6 +4,24 @@ const Codes = require('../Codes')
 const url = require('url')
 
 class HongikNoticeUpdateBroker{
+    noticeEndPoints = {
+        normal : {
+            name : "홍익대학교 일반공지",
+            fk : 2  
+        },
+        student : {
+            name : "홍익대학교 학생공지",
+            fk : 3
+        },
+        sejongCampus : {
+            name : "홍익대학교 세종캠퍼스공지",
+            fk : 10
+        },
+        events : {
+            name : "홍익대학교 행사/공모전 공지",
+            fk : 6
+        }
+    }
     constructor(type){
         this.type = type
     }
@@ -12,6 +30,10 @@ class HongikNoticeUpdateBroker{
         this.savedLatest = (await this.getLatestNoticeNumber()).msg
     }
     
+    getTypeName(){
+        return this.noticeEndPoints[this.type].name
+    }
+
     async getURLByPage (pageNumber, type = this.type){
         /**
          * Filte url based on instance type
@@ -24,13 +46,9 @@ class HongikNoticeUpdateBroker{
          * - Internet connection lost or unable to reach
          * 
          */
-        const noticeEndPoints = {
-            normal : `https://www.hongik.ac.kr/front/boardlist.do?currentPage=${pageNumber}&menuGubun=1&siteGubun=1&bbsConfigFK=2&searchField=ALL&searchValue=&searchLowItem=ALL`,
-            student : `https://www.hongik.ac.kr/front/boardlist.do?currentPage=${pageNumber}&menuGubun=1&siteGubun=1&bbsConfigFK=3&searchField=ALL&searchValue=&searchLowItem=ALL`,
-            sejongCampus : `https://www.hongik.ac.kr/front/boardlist.do?currentPage=${pageNumber}&menuGubun=1&siteGubun=1&bbsConfigFK=10&searchField=ALL&searchValue=&searchLowItem=ALL`
-        }
+        const url = `https://www.hongik.ac.kr/front/boardlist.do?currentPage=${pageNumber}&menuGubun=1&siteGubun=1&bbsConfigFK=${this.noticeEndPoints[type].fk}&searchField=ALL&searchValue=&searchLowItem=ALL`
         // Check if type supported
-        if(!Object.keys(noticeEndPoints).includes(type)){
+        if(!Object.keys(this.noticeEndPoints).includes(type)){
             const err = new Error()
             err.others = "Key not found"
             throw err   
@@ -38,7 +56,7 @@ class HongikNoticeUpdateBroker{
         let html
         try{
             // Parse first page of notice
-            html = await axios.get(noticeEndPoints[type])
+            html = await axios.get(url)
         }catch(err){
             return err.others
             ? Codes.error.othersError(err.others)
@@ -71,7 +89,7 @@ class HongikNoticeUpdateBroker{
             endRange = this.savedLatest
         }
         //TODO : Delete Debug line
-        endRange = 3585
+        //endRange = endRange - 5
         const callCounter = viewLatestNoticeNumber - endRange
         const paginationChecker = parseInt(callCounter / 10) + 1
         let notices = new Array()

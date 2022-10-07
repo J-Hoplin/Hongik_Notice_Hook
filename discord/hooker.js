@@ -8,11 +8,7 @@ const embedConfig = require('./embed.json')
 class Hooker {
     constructor(type){
         this.type = type
-        if(!Object.keys(config).includes(this.type)){
-            throw new Error("Type not supported")
-        }
-        this.name = config[type].name
-        this.list = config[type].list
+        this.list = config.hook_list
     }
 
     hexColorCodeDecimal(hex){
@@ -28,7 +24,7 @@ class Hooker {
             return {
                 embeds : [
                     {
-                        title : `${this.name} 알림`,
+                        title : `${this.scraper.getTypeName()} 알림`,
                         color : this.hexColorCodeDecimal(embedConfig.colors.warning),
                         fields : [
                             {
@@ -48,7 +44,7 @@ class Hooker {
             embeds : 
                 msg.map(x => {
                     const obj = {
-                        title : `${this.name} - No.${x.no}`,
+                        title : `${this.scraper.getTypeName()} - No.${x.no}`,
                         description : `작성자 : ${x.writer} / 작성일 : ${x.createdAt}`,
                         color : this.hexColorCodeDecimal(embedConfig.colors.normal),
                         fields : [
@@ -80,8 +76,9 @@ class Hooker {
         try{
             const res = await this.scraper.getNoticeByRange()
             const embed = await this.#embedBuilder(res)
-            console.log(embed)
-            await axios.post("",embed)
+            Promise.all(this.list.map(async (x) => {
+                return await axios.post(x,embed)
+            }))
         }catch(err){
             console.error(err.message)
         }
@@ -89,15 +86,15 @@ class Hooker {
 }
 
 
-const test = (async() => {
-    const p = new Hooker("student")
-    await p.init()
-    await p.main()
-})()
+// const test = (async() => {
+//     const p = new Hooker("student")
+//     await p.init()
+//     await p.main()
+// })()
 
 
-module.exports.hooker = async(type,name) => {
-    const instance = new Hooker(type,name)
+module.exports.NoticeHooker = async(type) => {
+    const instance = new Hooker(type)
     await instance.init()
     return instance
 }
