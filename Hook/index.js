@@ -40,7 +40,7 @@ class HongikNoticeUpdateBroker{
             // Parse first page of notice
             html = await axios.get(noticeEndPoints[type])
         }catch(err){
-            const a = err.others
+            return err.others
             ? Codes.error.othersError(err.others)
             : Codes.error.requestError
         }
@@ -70,6 +70,8 @@ class HongikNoticeUpdateBroker{
             /* for code safe */
             endRange = this.savedLatest
         }
+        //TODO : Delete Debug line
+        endRange = 3585
         const callCounter = viewLatestNoticeNumber - endRange
         const paginationChecker = parseInt(callCounter / 10) + 1
         let notices = new Array()
@@ -145,7 +147,7 @@ class HongikNoticeUpdateBroker{
                         const { fileName } = url.parse(link,true).query
                         return {
                             name : fileName,
-                            link
+                            link : `https://www.hongik.ac.kr${link}`
                         }
                     })
                     .toArray()
