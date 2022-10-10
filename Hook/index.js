@@ -29,10 +29,6 @@ class HongikNoticeUpdateBroker{
     async init (){
         this.savedLatest = (await this.getLatestNoticeNumber()).msg
     }
-    
-    getTypeName(){
-        return this.noticeEndPoints[this.type].name
-    }
 
     async getURLByPage (pageNumber, type = this.type){
         /**
@@ -102,6 +98,9 @@ class HongikNoticeUpdateBroker{
         }
         // Update latest notice number
         this.savedLatest = viewLatestNoticeNumber
+        if(notices.length === 0){
+            return Codes.error.othersError(notices)
+        }
         return Codes.success.othersMessage(notices)
     }
 

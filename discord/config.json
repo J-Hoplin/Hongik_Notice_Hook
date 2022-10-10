@@ -1,6 +1,6 @@
 {
     "hook_list" : [
-        "https://ptb.discord.com/api/webhooks/1027993420532293663/c-O2m3rZkcftlx4CUfQ2W4wFXniWU8r8CwBtqq8thwSfDFgq2NDczo1Wx8a1IoZHqp1V"
+        ""
     ],
     "request_period" : "*/1 * * * *"
 }

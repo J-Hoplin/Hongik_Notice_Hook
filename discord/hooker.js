@@ -75,6 +75,9 @@ class Hooker {
     async main(){
         try{
             const res = await this.scraper.getNoticeByRange()
+            if(res.status === Codes.status.fail){
+                return false
+            }
             const embed = await this.#embedBuilder(res)
             Promise.all(this.list.map(async (x) => {
                 return await axios.post(x,embed)
