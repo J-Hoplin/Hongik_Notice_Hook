@@ -17,4 +17,6 @@ RUN ln -sf /usr/share/zoneinfo/Asia/Seoul /etc/localtime
 RUN mkdir -p /apps
 WORKDIR /apps
 
+RUN npm i
+
 VOLUME [ "/apps" ]
