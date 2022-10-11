@@ -30,6 +30,10 @@ class HongikNoticeUpdateBroker{
         this.savedLatest = (await this.getLatestNoticeNumber()).msg
     }
 
+    getTypeName(){
+        return this.noticeEndPoints[this.type].name
+    }
+
     async getURLByPage (pageNumber, type = this.type){
         /**
          * Filte url based on instance type

@@ -18,7 +18,6 @@ class Hooker {
     async init(){
         this.scraper = await HongikNotice(this.type)
     }
-
     async #embedBuilder({status,msg}){
         if(status === Codes.status.fail){
             return {
@@ -44,12 +43,12 @@ class Hooker {
             embeds : 
                 msg.map(x => {
                     const obj = {
-                        title : `${this.scraper.getTypeName()} - No.${x.no}`,
+                        title : `${x.notice.title}`, 
                         description : `작성자 : ${x.writer} / 작성일 : ${x.createdAt}`,
                         color : this.hexColorCodeDecimal(embedConfig.colors.normal),
                         fields : [
                             {
-                                name : `**제목 : ${x.notice.title}**`,
+                                name : `**${this.scraper.getTypeName()} - No.${x.no}**`,
                                 value : `[본문 바로가기](${x.notice.url})\n\n`
                             }
                         ],
