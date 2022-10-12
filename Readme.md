@@ -7,6 +7,12 @@ Hongik Univ. Notice-Hook for Discord
 
 - axios
 - node-scheduler
+- cheerio
+- url
+
+## Requried Node.js Runtime Version
+
+- Upper than v.18
 
 ***
 ## Dockerfile execution infromation
