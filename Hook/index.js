@@ -89,8 +89,9 @@ class HongikNoticeUpdateBroker{
             endRange = this.savedLatest
         }
         //TODO : Delete Debug line
-        //endRange = endRange - 5
+        // endRange = endRange - 3
         const callCounter = viewLatestNoticeNumber - endRange
+        console.log(`${this.type} - Lastest : ${viewLatestNoticeNumber} Saved : ${endRange} `)
         const paginationChecker = parseInt(callCounter / 10) + 1
         let notices = new Array()
         for(let i = 1; i <= paginationChecker;i++){
